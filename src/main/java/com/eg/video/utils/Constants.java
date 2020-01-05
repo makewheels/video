@@ -8,8 +8,14 @@ public class Constants {
     //项目名
     public static String PROJECT_NAME = "video";
     //域名
-//    public static String DOMAIN = "qbserver.cn";
-    public static String DOMAIN = "localhost";
+    //    public static String DOMAIN = "qbserver.cn";
+    private static String DOMAIN = "localhost";
     //http协议
-    public static String HTTP_PROTOCOL = "http";
+    private static String HTTP_PROTOCOL = "http";
+    //api服务器BASE_URL
+    public static String BASE_URL = HTTP_PROTOCOL + "://" + DOMAIN + "/" + PROJECT_NAME;
+    //文件存储服务器BASE_URL
+    public static String FILE_STORAGE_BASE_URL = BASE_URL;
+    //请求文件指向
+    public static String REQUEST_FILE_URI = "video-project-files";
 }

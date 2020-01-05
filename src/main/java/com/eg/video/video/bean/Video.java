@@ -1,12 +1,17 @@
-package com.eg.video.video;
+package com.eg.video.video.bean;
 
-import com.eg.video.file.UploadFile;
+import com.eg.video.video.play.PlaySetting;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 @Data
+@Document
 public class Video {
+    @Id
+    private String _id;
     private String key;//视频id
     private String title;//标题
     private Date createTime;//创建时间
