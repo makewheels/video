@@ -1,5 +1,6 @@
 package com.eg.video.video;
 
+import com.eg.video.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,12 +36,24 @@ public class VideoController {
             @RequestParam("title") String title,
             @RequestParam("videoFile") MultipartFile videoFile,
             @RequestParam("coverFile") MultipartFile coverFile,
+            @RequestParam("description") String description,
             @RequestParam("password") String password) {
         if (password.equals("666666") == false) {
             return "fail";
         }
-        videoService.uploadVideo(title,videoFile,coverFile);
-        return "success";
+        String videoKey = videoService.uploadVideo(title, videoFile, coverFile, description);
+        return Constants.HTTP_PROTOCOL + "://" + Constants.DOMAIN + "/" + Constants.PROJECT_NAME
+                + "/video/watch?key=" + videoKey;
+    }
+
+    /**
+     * 观看视频
+     *
+     * @return
+     */
+    @RequestMapping("/watch")
+    public String uploadVideo(@RequestParam("key") String key) {
+
     }
 
 }
