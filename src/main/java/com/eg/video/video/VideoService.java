@@ -36,7 +36,7 @@ public class VideoService {
         uploadFile.setExtension(extension);
         uploadFile.setProvider("local");
         //例如：D:/temp/video-project/video/
-        String relativePath = "/" + Constants.REQUEST_FILE_URI + "/" + Constants.VIDEO_FOLDER_NAME
+        String relativePath = "/" + Constants.VIDEO_FOLDER_NAME
                 + "/" + videoKey + "/" + UuidUtil.getUuid() + "." + extension;
         uploadFile.setRelativePath(relativePath);
         //要保存到本地的文件
@@ -63,7 +63,7 @@ public class VideoService {
         uploadFile.setFileSize(coverFile.getSize());
         String extension = FilenameUtils.getExtension(coverFile.getOriginalFilename());
         uploadFile.setExtension(extension);
-        String relativePath = "/" + Constants.REQUEST_FILE_URI + "/" + Constants.VIDEO_FOLDER_NAME
+        String relativePath = "/" + Constants.VIDEO_FOLDER_NAME
                 + "/" + videoKey + "/" + UuidUtil.getUuid() + "." + extension;
         uploadFile.setRelativePath(relativePath);
         //要保存到本地的文件
@@ -130,9 +130,9 @@ public class VideoService {
         if (coverFile == null) {
             playInfo.setCoverUrl(null);
         } else {
-            playInfo.setCoverUrl(Constants.FILE_STORAGE_BASE_URL + coverFile.getRelativePath());
+            playInfo.setCoverUrl(Constants.FILE_SERVER_BASE_URL + coverFile.getRelativePath());
         }
-        playInfo.setVideoUrl(Constants.FILE_STORAGE_BASE_URL + video.getVideoFile().getRelativePath());
+        playInfo.setVideoUrl(Constants.FILE_SERVER_BASE_URL + video.getVideoFile().getRelativePath());
         return playInfo;
     }
 }

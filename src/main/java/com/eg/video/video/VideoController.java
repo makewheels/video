@@ -124,11 +124,4 @@ public class VideoController {
         }
     }
 
-    @RequestMapping(Constants.REQUEST_FILE_URI)
-    public String requestFile() {
-
-        return null;
-    }
-
-
 }
