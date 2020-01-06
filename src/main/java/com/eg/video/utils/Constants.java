@@ -17,5 +17,5 @@ public class Constants {
     //文件存储服务器BASE_URL
     public static String FILE_STORAGE_BASE_URL = BASE_URL;
     //请求文件指向
-    public static String REQUEST_FILE_URI = "video-project-files";
+    public static final String REQUEST_FILE_URI = "video-project-files";
 }

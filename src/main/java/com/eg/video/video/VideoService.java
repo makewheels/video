@@ -48,6 +48,7 @@ public class VideoService {
             }
             //保存到本地
             IOUtils.copy(videoFile.getInputStream(), new FileOutputStream(saveFile));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
