@@ -20,6 +20,5 @@ public class Video {
     private PlaySetting playSetting;//播放设置
 
     private UploadFile videoFile;
-    private UploadFile coverFile;
 
 }

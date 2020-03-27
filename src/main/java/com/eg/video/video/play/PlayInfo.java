@@ -14,6 +14,5 @@ public class PlayInfo {
     private int viewCount;
     private Date createTime;
     private PlaySetting playSetting;
-    private String coverUrl;
     private String videoUrl;
 }
