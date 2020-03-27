@@ -13,5 +13,4 @@ public class UploadFile {
 
     private String relativePath;//相对路径：对象存储有相对路径，本地存储也有相对路径
     private String url;//网址
-    private String provider;//提供者，例如：七牛，GCP
 }

@@ -1,0 +1,14 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /videoapp
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost/video
+  servlet:
+    multipart:
+      max-request-size: 10GB
+      max-file-size: 10GB
+      enabled: true
+

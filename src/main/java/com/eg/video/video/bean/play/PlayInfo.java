@@ -1,4 +1,4 @@
-package com.eg.video.video.play;
+package com.eg.video.video.bean.play;
 
 import lombok.Data;
 

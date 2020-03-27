@@ -1,9 +1,15 @@
 package com.eg.video.video;
 
+import com.eg.video.utils.Constants;
+import com.eg.video.video.bean.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,5 +57,33 @@ public class VideoController {
         }
     }
 
+    /**
+     * 请求新建视频
+     *
+     * @return
+     */
+    @RequestMapping("/newVideo")
+    public String newVideo(Map<String, String> map) {
+        Video video = videoService.prepareNewVideo();
+        String videoKey = video.getKey();
+        map.put("videoUrl", Constants.BASE_URL + "/watch?key=" + videoKey);
+        map.put("videoKey", videoKey);
+        map.put("uploadUrl", Constants.BASE_URL + "/video/upload?key=" + videoKey);
+        map.put("indexPageUrl", Constants.BASE_URL);
+        return "newVideo";
+    }
 
+    /**
+     * 上传视频
+     *
+     * @return
+     */
+    @RequestMapping("/upload")
+    @ResponseBody
+    public String upload(@RequestParam String key,
+                         @RequestParam MultipartFile file) {
+        //处理上传视频
+        videoService.handleUploadVideo(key, file);
+        return "success";
+    }
 }
