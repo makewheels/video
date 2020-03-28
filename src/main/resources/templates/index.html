@@ -22,7 +22,8 @@
     <tbody>
     <tr th:each="video,stat:${videoList}">
         <td th:text="${stat.count}"></td>
-        <td><a th:href="${BASE_URL}+'/video/watch?key='+${video.key}" th:text="${video.title}"></a></td>
+        <td><a th:href="${BASE_URL}+'/video/watch?key='+${video.key}"
+               target="_blank" th:text="${video.title}"></a></td>
         <td th:text="${#dates.format(video.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td th:text="${video.viewCount}"></td>
         <td th:text="${video.cdnPreload.state}"></td>
