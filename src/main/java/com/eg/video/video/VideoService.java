@@ -122,7 +122,7 @@ public class VideoService {
         cdnPreload.setState(status);
         video.setCdnPreload(cdnPreload);
         videoDao.save(video);
-        //我看到底能不能运行
+        //http://baidu.server.qbserver.cn:8082/videoapp/video/watch?key=801ec61bb2a54844a82703ce56edc157
     }
 
     /**

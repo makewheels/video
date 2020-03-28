@@ -33,6 +33,7 @@ public class VideoController {
     @RequestMapping("/index")
     public String index(Model model) {
         List<Video> videoList = videoService.findVideosByVideoFileNotNull();
+        model.addAttribute("BASE_URL", Constants.BASE_URL);
         model.addAttribute("videoList", videoList);
         return "index";
     }
