@@ -122,6 +122,7 @@ public class VideoService {
         cdnPreload.setState(status);
         video.setCdnPreload(cdnPreload);
         videoDao.save(video);
+        //我看到底能不能运行
     }
 
     /**
