@@ -12,18 +12,20 @@
 <table border="1" cellspacing="0" style="margin: auto">
     <thead>
     <tr>
-        <td>wafe</td>
-        <td>wafe</td>
-        <td>wafe</td>
-        <td>wafe</td>
+        <td>NO</td>
+        <td>title</td>
+        <td>createTime</td>
+        <td>viewCount</td>
+        <td>cdnState</td>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>few</td>
-        <td>few</td>
-        <td>few</td>
-        <td>few</td>
+    <tr th:each="video,stat:${videoList}">
+        <td th:text="${stat.count}"></td>
+        <td th:text="${video.title}"></td>
+        <td th:text="${#dates.format(video.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${video.viewCount}"></td>
+        <td th:text="${video.cdnPreload.state}"></td>
     </tr>
     </tbody>
 </table>

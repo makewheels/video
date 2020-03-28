@@ -2,71 +2,52 @@ package com.eg.video.video;
 
 import com.eg.video.utils.Constants;
 import com.eg.video.video.bean.Video;
+import com.eg.video.video.bean.ViewLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/video")
 public class VideoController {
-
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private ViewLogService viewLogService;
 
     /**
-     * 通过user agent查看是否来自手机
-     * 如果是手机，返回true
-     * 如果是平板或者pc，返回false
+     * 主页
      *
-     * @param userAgent
      * @return
      */
-    public boolean isFromMobilePhone(String userAgent) {
-        //1. 获得请求UA
-        userAgent = userAgent.toLowerCase();
-
-        //2.声明手机和平板的UA的正则表达式
-        // \b 是单词边界(连着的两个(字母字符 与 非字母字符) 之间的逻辑上的间隔),
-        // 字符串在编译时会被转码一次,所以是 "\\b"
-        // \B 是单词内部逻辑间隔(连着的两个字母字符之间的逻辑上的间隔)
-        String phoneReg = "\\b(ip(hone|od)|android|opera m(ob|in)i" + "|windows (phone|ce)|blackberry"
-                + "|s(ymbian|eries60|amsung)|p(laybook|alm|rofile/midp" + "|laystation portable)|nokia|fennec|htc[-_]"
-                + "|mobile|up.browser|[1-4][0-9]{2}x[1-4][0-9]{2})\\b";
-        String tableReg = "\\b(ipad|tablet|(Nexus 7)|up.browser" + "|[1-4][0-9]{2}x[1-4][0-9]{2})\\b";
-
-        // 3.移动设备正则匹配：手机端、平板
-        Pattern phonePat = Pattern.compile(phoneReg, Pattern.CASE_INSENSITIVE);
-        Pattern tablePat = Pattern.compile(tableReg, Pattern.CASE_INSENSITIVE);
-        if (null == userAgent) {
-            userAgent = "";
-        }
-        // 4.匹配
-        Matcher matcherPhone = phonePat.matcher(userAgent);
-        Matcher matcherTable = tablePat.matcher(userAgent);
-        if (matcherPhone.find()) {
-            return true; //来自手机
-        } else {
-            return false; //来自PC或者平板
-        }
+    @RequestMapping("/index")
+    public String index(Model model) {
+        List<Video> videoList = videoService.findVideosByVideoFileNotNull();
+        model.addAttribute("videoList", videoList);
+        return "index";
     }
 
     /**
      * 请求新建视频
      *
+     * @param map
      * @return
      */
     @RequestMapping("/newVideo")
     public String newVideo(Map<String, String> map) {
         Video video = videoService.prepareNewVideo();
         String videoKey = video.getKey();
-        map.put("videoUrl", Constants.BASE_URL + "/watch?key=" + videoKey);
+        map.put("videoUrl", Constants.BASE_URL + "/video/watch?key=" + videoKey);
         map.put("videoKey", videoKey);
         map.put("uploadUrl", Constants.BASE_URL + "/video/upload?key=" + videoKey);
         map.put("indexPageUrl", Constants.BASE_URL);
@@ -76,6 +57,8 @@ public class VideoController {
     /**
      * 上传视频
      *
+     * @param key
+     * @param file
      * @return
      */
     @RequestMapping("/upload")
@@ -85,5 +68,35 @@ public class VideoController {
         //处理上传视频
         videoService.handleUploadVideo(key, file);
         return "success";
+    }
+
+    /**
+     * 观看视频
+     *
+     * @param key
+     * @param map
+     * @return
+     */
+    @RequestMapping("/watch")
+    public String watch(@RequestParam String key, Map<String, String> map, HttpServletRequest request,
+                        @RequestHeader("User-Agent") String userAgent) {
+        Video video = videoService.getVideoByKey(key);
+        if (video == null) {
+            return null;
+        }
+        //保存观看记录
+        ViewLog viewLog = new ViewLog();
+        viewLog.setVideoKey(key);
+        viewLog.setViewTime(new Date());
+        viewLog.setIp(request.getRemoteAddr());
+        viewLog.setUserAgent(userAgent);
+        viewLogService.save(viewLog);
+        //观看次数加1
+        video.setViewCount(video.getViewCount() + 1);
+        videoService.save(video);
+        //设置前端参数
+        map.put("title", video.getTitle());
+        map.put("videoSourceUrl", Constants.CDN_BASE_URL + video.getVideoFile().getRelativePath());
+        return "playVideo";
     }
 }
