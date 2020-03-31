@@ -108,7 +108,8 @@ public class VideoService {
         videoDao.save(video);
 
         //转码
-        if (extension.equals("mp4") == false) {
+        //不是mp4.不是webm
+        if (extension.equals("mp4") == false && extension.equals("webm") == false) {
             System.out.println("not mp4，转码走着..***---");
         }
 
