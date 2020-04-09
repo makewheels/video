@@ -20,7 +20,7 @@ public class Constants {
         } else {
             //如果是服务器Linux
             //域名
-            DOMAIN = "baidu.server.qbserver.cn";
+            DOMAIN = "aliyun.server.qbserver.cn";
             //本地存储根路径
             LOCAL_FILE_ROOT_PATH = "/home/files/video-project";
         }
@@ -42,7 +42,7 @@ public class Constants {
             + PORT + "/" + PROJECT_NAME;
 
     //cdn url
-    public static String CDN_BASE_URL = "https://cdn.baidu.qbserver.cn/video-project";
+    public static String CDN_BASE_URL = "http://aliyun.cdn.baidu.qbserver.cn/video-project";
 
     public static String CDN_STATE_LOADING = "loading";
     public static String CDN_STATE_FINISH = "finish";

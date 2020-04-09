@@ -17,6 +17,7 @@
         <td>createTime</td>
         <td>viewCount</td>
         <td>cdnState</td>
+        <td>size</td>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +28,7 @@
         <td th:text="${#dates.format(video.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td th:text="${video.viewCount}"></td>
         <td th:text="${video.cdnPreload.state}"></td>
+        <td th:text="${video.videoFile.fileSize}"></td>
     </tr>
     </tbody>
 </table>
