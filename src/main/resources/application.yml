@@ -5,7 +5,12 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost/video
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      username: root
+      password: mongodpwdVEfwrAYY5ozsz
+      database: libraryapp
   servlet:
     multipart:
       max-request-size: 10GB
